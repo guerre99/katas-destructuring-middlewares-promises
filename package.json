@@ -1,0 +1,15 @@
+{
+  "name": "katas-destructuring-middlewares-promises",
+  "version": "1.0.0",
+  "description": "CREAR un repo con:",
+  "main": "iteracion1.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -67,3 +67,71 @@ Lo primero que haremos será crear una definición de ruta en express que admita
 - nombre
 - número de repositorios
 - avatar (imagen)
+
+## ITERACIÓN 3: middlewares
+
+Crea otro repositorio con un nuevo server de express con el siguiente boilerplate:
+
+## Ejercicio 1:
+
+```javascript
+const express = require('express')
+
+const app = express()
+
+const port = 3000
+
+app.use(express.json())
+
+const pets = [
+  { name: 'Lassie', type: 'dog' },
+  { name: 'Felix', type: 'cat' },
+  { name: 'Garfield', type: 'cat' },
+  { name: 'Peter', type: 'rabbit' },
+]
+
+// Crear middlewares
+
+//1. Primer middleware
+// Este primer middleware se encarga de registrar información sobre la solicitud, como el verbo HTTP, el path del endpoint, los datos en el cuerpo de la solicitud y cualquier otra información relevante.
+
+// Es un middleware general que se aplica a todos los endpoint de la aplicación.
+
+// 2. Segundo middleware:
+
+// Este segundo middleware se aplica solo al punto final `POST /pets`. Su función es verificar si se ha enviado información en el cuerpo de la solicitud. Si se encuentra body, se permite continuar con el controlador de la solicitud POST. Si no se encuentra ningún dato en el cuerpo de la solicitud, se corta el ciclo response-response enviando una respuesta con el código de estado 422.
+
+// 3 Tercer middleware:
+
+// El tercer middleware también se aplica solo al punto final `POST /pets`. Su tarea es verificar que el tipo de contenido de la solicitud sea `application/json`. Si el tipo de contenido es correcto, la solicitud continúa al siguiente middleware. Si el tipo de contenido es incorrecto, se detiene enviando una respuesta con el código de estado 400.
+
+app.post('/pets', (req, res) => {
+  const pet = req.body
+
+  for (let requiredParameter of ['name', 'type']) {
+    if (!pet[requiredParameter]) {
+      return res.status(422).send({
+        error: `Expected format: { name: <String>, type: <String> }. You're missing a "${requiredParameter}" property.`,
+      })
+    }
+  }
+
+  const { name, type } = pet
+
+  pets.push({ name, type })
+
+  response.status(201).json({ name, type })
+})
+
+app.get('/pets', (req, res) => {
+  response.status(200).json(pets)
+})
+
+app.listen(port, () => {
+  console.log(`Middleware exercise server running on http://localhost:${port}`)
+})
+```
+
+### Ejercicio 2
+
+Extrae los 3 middleware en un custom module e importarlos desde otro archivo en el archivo principal para setearlos en la aplicación con `app.use`.
