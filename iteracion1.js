@@ -17,11 +17,10 @@ const [{ email }] = empleados
 console.log(email)
 
 // 3
-const obj = { a: 5, b: 3 }
+let a = 5
+let b = 3
 
-const { a: b, b: a } = obj
-
-console.log(a, b)
+;[b, a] = [a, b]
 
 // 4
 const HIGH_TEMPERATURES = {
